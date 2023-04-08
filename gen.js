@@ -1,9 +1,13 @@
 #! /usr/bin/env node
 
-var argv=process.argv;
-var filePath=__dirname;
-var currentPath=process.cwd();
+var filePath = __dirname
+var path= require('path')
 
-console.log('argv',argv)
-console.log('filePath',filePath)
-console.log('currentPath',currentPath)
+var fs=require('fs')
+var nunjucks =require('nunjucks')
+var tpl=fs.readFileSync(path.join(filePath,'gen.tpl')).toString()
+
+var compiledData=nunjucks.renderString(tpl,{username:'liuyi'})
+
+console.log(compiledData)
+fs.writeFileSync(path.join(filePath,'gen.html'),compiledData)
